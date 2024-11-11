@@ -1,10 +1,10 @@
-These are the basic needed files and folders to build CachyOS system.
+These are the basic needed files and folders to build the system.
 
 ### buildiso
 
-buildiso is used to build CachyOS ISO.
+buildiso is used to build the ISO.
 
-#### Arguments
+<!-- #### Arguments
 
 ~~~
 $ ./buildiso.sh -h
@@ -37,4 +37,4 @@ cd cachyos-archiso
 sudo ./buildiso.sh -p desktop -v
 ```
 
-As the result iso appears at the `out` folder
+As the result iso appears at the `out` folder -->
