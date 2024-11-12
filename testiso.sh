@@ -26,14 +26,14 @@ fi
 vdi_size=10240 # 10GB size
 
 #Check if already exist virtual disk and in case create it
-if [[ -e ~/VirtualBox\ VMs/CachyOS/CachyOS.vbox ]]; then
-    msg "CachyOS Virtual Machine Found"
+if [[ -e ~/VirtualBox\ VMs/foliOS/foliOS.vbox ]]; then
+    msg "foliOS Virtual Machine Found"
 else
-    msg "We create a new VirtualBox Machine called CachyOS"
+    msg "We create a new VirtualBox Machine called foliOS"
     msg2 "We create a new Virtual Disk Image ( vdi ) with ${vdi_size}GB"
-    VBoxManage createmedium disk --filename ~/VirtualBox\ VMs/CachyOS/CachyOS.vdi --size ${vdi_size} --format VDI --variant Fixed
+    VBoxManage createmedium disk --filename ~/VirtualBox\ VMs/foliOS/foliOS.vdi --size ${vdi_size} --format VDI --variant Fixed
 
-    UUID=$(VBoxManage showhdinfo ~/VirtualBox\ VMs/CachyOS/CachyOS.vdi | awk 'NR == 1  {print $2}') #uuid of vdi disk
+    UUID=$(VBoxManage showhdinfo ~/VirtualBox\ VMs/foliOS/foliOS.vdi | awk 'NR == 1  {print $2}') #uuid of vdi disk
     gui_lang=$(awk -F'[.=]' '/LANG/ {print $2}' /etc/locale.conf)
 
     echo '<?xml version="1.0"?>
@@ -44,10 +44,10 @@ else
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.16-linux">
-  <Machine uuid="{b146a487-eeff-48d1-a404-b1c15f077feb}" name="CachyOS" OSType="ArchLinux_64" snapshotFolder="Snapshots" lastStateChange="2022-07-11T14:59:41Z">
+  <Machine uuid="{b146a487-eeff-48d1-a404-b1c15f077feb}" name="foliOS" OSType="ArchLinux_64" snapshotFolder="Snapshots" lastStateChange="2022-07-11T14:59:41Z">
     <MediaRegistry>
       <HardDisks>
-        <HardDisk uuid="{UUID}" location="CachyOS.vdi" format="VDI" type="Normal"/>
+        <HardDisk uuid="{UUID}" location="foliOS.vdi" format="VDI" type="Normal"/>
       </HardDisks>
     </MediaRegistry>
     <Hardware>
@@ -93,16 +93,16 @@ else
       </StorageController>
     </StorageControllers>
   </Machine>
-</VirtualBox>' > ~/VirtualBox\ VMs/CachyOS/CachyOS.vbox
+</VirtualBox>' > ~/VirtualBox\ VMs/foliOS/foliOS.vbox
 
-    sed -i "s/UUID/$UUID/g" ~/VirtualBox\ VMs/CachyOS/CachyOS.vbox
-    sed -i "s/gui_lang/$gui_lang/g" ~/VirtualBox\ VMs/CachyOS/CachyOS.vbox
+    sed -i "s/UUID/$UUID/g" ~/VirtualBox\ VMs/foliOS/foliOS.vbox
+    sed -i "s/gui_lang/$gui_lang/g" ~/VirtualBox\ VMs/foliOS/foliOS.vbox
 
-    VBoxManage registervm ~/VirtualBox\ VMs/CachyOS/CachyOS.vbox #register the cachyos vbox machine
+    VBoxManage registervm ~/VirtualBox\ VMs/foliOS/foliOS.vbox #register the folios vbox machine
 fi
 
 
-VBoxManage storageattach CachyOS --storagectl IDE --port 1 --device 0 --medium emptydrive #empty the dvd drive
+VBoxManage storageattach foliOS --storagectl IDE --port 1 --device 0 --medium emptydrive #empty the dvd drive
 sleep 1
 
 iso_dir=$(find ${outFolder} -type d -iname "$1")
@@ -115,13 +115,13 @@ else msg "No ISO to load present"
      exit 1
 fi
 
-VBoxManage storageattach CachyOS --storagectl IDE --port 1 --device 0  --type dvddrive --medium $iso_name #attach dvd cachyos iso
+VBoxManage storageattach foliOS --storagectl IDE --port 1 --device 0  --type dvddrive --medium $iso_name #attach dvd folios iso
 
 sleep 1
 
-msg2 "Run Vbox CachyOS with ${iso_name}"
+msg2 "Run Vbox foliOS with ${iso_name}"
 
 sleep 2
 
-VBoxManage startvm CachyOS #run vbox machine
+VBoxManage startvm foliOS #run vbox machine
 
