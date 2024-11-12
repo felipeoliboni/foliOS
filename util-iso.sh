@@ -57,8 +57,7 @@ trap_exit() {
 
 generate_motd() {
     cat << 'EOF' > ${src_dir}/archiso/airootfs/etc/motd
-This ISO is based on ArchLinux ISO modified to provide Installation Environment for [38;2;23;147;209mCachyOS[0m.
-https://cachyos.org
+This ISO is based on CachyOS/ArchLinux ISO.
 
 CachyOS Archiso Sources:
 https://github.com/cachyos/cachyos-live-iso
@@ -216,7 +215,7 @@ run_build() {
 
 gen_iso_fn(){
     local vars=() name
-    vars+=("cachyos")
+    vars+=("foliOS")
     [[ -n ${profile} ]] && vars+=("${profile}")
 
     vars+=("linux")
